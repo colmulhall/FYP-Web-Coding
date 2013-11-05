@@ -1,5 +1,5 @@
 <?php
-	$html = file_get_contents('http://phoenixpark.ie/newsevents/2013/title,24755,en.html'); //get the html returned from the following url
+	$html = file_get_contents('http://www.phoenixpark.ie/newsevents/2013/title,24194,en.html'); //get the html returned from the following url
 
 	$park_doc = new DOMDocument();  //declare a new DOM object
 
