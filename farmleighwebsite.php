@@ -14,7 +14,7 @@
 	  
 	  //perform queries to find information
 	  $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
-	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5 | //*[not]');  //get the event description
+	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //gets the event description
 	  
 	  //display contents
 	  if($event_desc->length > 0)

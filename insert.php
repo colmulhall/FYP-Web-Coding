@@ -1,5 +1,7 @@
 <?php
-
+	
+	//testing the connection to the mysql database with a hard coded insert
+	
 	$user_name = 'root';
 	$password = '';
 	$database = 'park_events';

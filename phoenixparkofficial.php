@@ -40,7 +40,7 @@
 	    $node = $event_desc->item(0);
 	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";
 			   
-	    /*get event description
+	    /*get event description -- Still some problems with iterating over the sentences from the web scrape
 	    $i = 0;
 	    do
 	    {
