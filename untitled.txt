@@ -1,0 +1,11 @@
+<?php
+	mysql_connect("localhost","username","password");
+	mysql_select_db("DatabaseName");
+	
+	$sql=mysql_query("select * from TableName where EMP_NAME like 'Zee%'");
+	
+	while($row=mysql_fetch_assoc($sql))
+		$output[]=$row;
+	print(json_encode($output));// this will print the output in json
+	mysql_close();
+?>
