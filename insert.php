@@ -1,4 +1,4 @@
-<?php
+<a href="insert.php" id="" title="insert">insert</a><?php
 	
 	//testing the connection to the mysql database with a hard coded insert
 	
