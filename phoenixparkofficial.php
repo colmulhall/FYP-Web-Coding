@@ -1,4 +1,5 @@
 <?php
+     //-------------------------WEB SCRAPE---------------------------
 	$html = file_get_contents('http://www.phoenixpark.ie/newsevents/title,22296,en.html'); //get the html returned from the following url
 
 	$park_doc = new DOMDocument();  //declare a new DOM object
@@ -35,24 +36,28 @@
 	{
 		//get event title
 	    $node = $event_title->item(0);
-	    $event_title = "{$node->nodeName} - {$node->nodeValue}";
+	    $event_title = "{$node->nodeName} - {$node->nodeValue}";  //convert to string
+	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);   //ignore non UTF-8 characters
+	    $event_title = substr($event_title, 5);  //remove the tag at the beginning of the string
+	    
+	    
+	    //get event description -- Still some problems with iterating over the sentences from the web scrape
+	    foreach($node as $item)
+	    {
+	    	   $node = $event_desc->item();
+	        $event_desc = "{$node->nodeName} - {$node->nodeValue}";
+	    }
+	    
 	    
 	    $node = $event_desc->item(0);
-	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";
-			   
-	    /*get event description -- Still some problems with iterating over the sentences from the web scrape
-	    $i = 0;
-	    do
-	    {
-	    	   $node = $event_desc->item($i);
-	        $event_desc = "{$node->nodeName} - {$node->nodeValue}";
-		   $i++;
-	    }
-	    while($node != "");*/
+	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   //convert to string
+	    $event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_desc);   //ignore non UTF-8 characters
+	    $event_desc = substr($event_desc, 3);  //remove the tag at the beginning of the string
+		
 	}
 	
 	
-	//----------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
+	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
 	$password = '';
 	$database = 'park_events';
@@ -79,13 +84,13 @@
 	
 	
 	//Insert into the database
-	mysql_select_db($database, $connection); 
+	mysql_select_db($database, $connection);
 	
 	$sql = "INSERT INTO event_list (title, description)
 	VALUES
 	('$event_title', '$event_desc')";
 
-	mysql_query($sql); 
+	mysql_query($sql);
 
 	mysql_close($connection);
 

@@ -10,13 +10,13 @@
 	$connection = mysql_connect($server, $user_name, $password);
 	mysql_select_db($database, $connection);
  
-	$sql = mysql_query("select * from event_list where id = 17");
+	$sql = mysql_query("select * from event_list where id = 34");
 	while($row = mysql_fetch_assoc($sql))
 	{
 		$output[] = $row;
 	}
 	
-	print(json_encode($output));     // this will print the output in json
+	print(json_encode($output));    //this will print the output in json
 	
 	mysql_close($connection);
 ?>
