@@ -10,7 +10,8 @@
 	$connection = mysql_connect($server, $user_name, $password);
 	mysql_select_db($database, $connection);
  
-	$sql = mysql_query("select * from event_list where id = 34");
+	$sql = mysql_query("select * from event_list where id = 37");
+	
 	while($row = mysql_fetch_assoc($sql))
 	{
 		$output[] = $row;

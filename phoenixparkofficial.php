@@ -1,6 +1,8 @@
 <?php
      //-------------------------WEB SCRAPE---------------------------
-	$html = file_get_contents('http://www.phoenixpark.ie/newsevents/title,22296,en.html'); //get the html returned from the following url
+	$page = 'http://www.phoenixpark.ie/newsevents/title,25078,en.html';   //page to scrape
+	
+	$html = file_get_contents($page); //get the html returned from the page selected
 
 	$park_doc = new DOMDocument();  //declare a new DOM object
 
@@ -15,47 +17,33 @@
 	  
 	  //perform queries to find information
 	  $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
-	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //get the event description
-	  
-	  /*if($event_desc->length > 0)
-	  {
-		  foreach($event_title as $row)
-		  {
-			  echo $row->nodeValue . "<br/>";
-		  }
-		  echo "<br/>";
-		  foreach($event_desc as $row)
-		  {
-			  echo $row->nodeValue . "<br/>";
-		  }
-	  }*/
+	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //gets the event description
 	}
 	
 	//convert scraped data from DOMNodeList to string
-	if($event_title->length > 0) 
+	if($event_title->length > 0)
 	{
 		//get event title
 	    $node = $event_title->item(0);
-	    $event_title = "{$node->nodeName} - {$node->nodeValue}";  //convert to string
-	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);   //ignore non UTF-8 characters
-	    $event_title = substr($event_title, 5);  //remove the tag at the beginning of the string
+	    $event_title = "{$node->nodeName} - {$node->nodeValue}";                //convert to string
+	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);      //ignore non UTF-8 characters
+	    $event_title = substr($event_title, 5); 						      //remove the tag at the beginning of the string
+	    echo $event_title;
 	    
+	    echo '<br/>';
 	    
-	    //get event description -- Still some problems with iterating over the sentences from the web scrape
-	    foreach($node as $item)
+	    //get event description. iterate through the paragraph adding each sentence to the string "full_event_desc"
+	    $full_event_desc = '';
+	    foreach($event_desc as $node) 
 	    {
-	    	   $node = $event_desc->item();
-	        $event_desc = "{$node->nodeName} - {$node->nodeValue}";
+		    $full_event_desc .= $node->textContent;
 	    }
 	    
-	    
-	    $node = $event_desc->item(0);
-	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   //convert to string
-	    $event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_desc);   //ignore non UTF-8 characters
-	    $event_desc = substr($event_desc, 3);  //remove the tag at the beginning of the string
-		
+	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	       //convert to string
+	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
+	    $event_desc = substr($event_desc, 3); 						     	       //remove the tag at the beginning of the string
+	    echo $full_event_desc;
 	}
-	
 	
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
@@ -75,23 +63,21 @@
 	$db_found = mysql_select_db($database, $connection);
 	if ($db_found)
 	{
-		print "Database Found ";
+		print "Database Found </br>";
+		
+		//Insert into the database
+		mysql_select_db($database, $connection);
+	
+		$sql = "INSERT INTO event_list (title, description)
+		VALUES
+		('$event_title', '$full_event_desc')";
+
+		mysql_query($sql);
+	
+		print "Inserted";
 	}
 	else 
-	{
 		print "Database NOT Found ";
-	}
 	
-	
-	//Insert into the database
-	mysql_select_db($database, $connection);
-	
-	$sql = "INSERT INTO event_list (title, description)
-	VALUES
-	('$event_title', '$event_desc')";
-
-	mysql_query($sql);
-
 	mysql_close($connection);
-
 ?>
