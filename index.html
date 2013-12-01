@@ -1,0 +1,27 @@
+<html>
+
+<script type=text/javascript>
+   function answers()
+   {
+      var answer=document.getElementById("website");
+      alert(answer); 
+   }
+</script>
+
+<body>
+   <center>
+	   
+	   <select name="newSkill" id="website">
+	       <option value="1">Phoenix Park Official</option>
+	       <option value="farmleighwebsite.php">Farmleigh Official</option>
+	   </select>
+	   
+        <form action="farmleighwebsite.php" method="post">
+	    
+            Webpage to scrape: <input type="text" name="url" size=50>
+            <input type="submit" value="Submit" onclick="answers()">
+	   
+        </form>
+   </center>
+</body>
+</html>

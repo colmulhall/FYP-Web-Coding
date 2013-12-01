@@ -1,7 +1,7 @@
 <?php
-     //-------------------------WEB SCRAPE---------------------------
-	$page = 'http://www.phoenixpark.ie/newsevents/title,26948,en.html';   //page to scrape
-	
+	//-------------------------WEB SCRAPE---------------------------
+	$page = 'http://www.heritageireland.ie/ecal/calendar?dt=d.en.25168&f=day&d=02/11/2013&ac=*';   //page to scrape
+
 	$html = file_get_contents($page); //get the source code returned from the page selected
 
 	$park_doc = new DOMDocument();  //declare a new DOM object
@@ -10,14 +10,14 @@
 
 	if(!empty($html))    //if any html is actually returned
 	{
-	  $park_doc->loadHTML($html);
-	  libxml_clear_errors(); //remove html errors
-	  
-	  $xpath = new DOMXPath($park_doc);  //DOMXPath allows queries with the DOM document. 
-	  
-	  //perform queries to find information
-	  $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
-	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //gets the event description
+		$park_doc->loadHTML($html);
+ 	     libxml_clear_errors(); //remove html errors
+  
+ 	     $xpath = new DOMXPath($park_doc);  //DOMXPath allows queries with the DOM document. 
+  
+ 	 	 //perform queries to find information
+ 	 	 $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
+ 		 $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p');  //gets the event description
 	}
 	
 	//convert scraped data from DOMNodeList to string
@@ -34,9 +34,10 @@
 	    
 	    //get event description. iterate through the paragraph adding each sentence to the string "full_event_desc"
 	    $full_event_desc = '';
-	    foreach($event_desc as $node) 
+	    foreach($event_desc as $node)
 	    {
 		    $full_event_desc .= $node->textContent;
+		    $full_event_desc .= '<br/>';
 	    }
 	    
 	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	       //convert to string
@@ -68,7 +69,7 @@
 		//Insert into the database
 		mysql_select_db($database, $connection);
 	
-		$sql = "INSERT INTO event_list (title, description)
+		$sql = "INSERT INTO event_list (title, description, location)
 		VALUES
 		('$event_title', '$full_event_desc')";
 
