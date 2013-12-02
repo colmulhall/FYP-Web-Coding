@@ -1,6 +1,6 @@
 <?php
      //-------------------------WEB SCRAPE---------------------------
-	$page = 'http://www.phoenixpark.ie/newsevents/title,26948,en.html';   //page to scrape
+	$page = $_POST["phoenix_url"];   //get url of the page to scrape from index.html
 	
 	$html = file_get_contents($page); //get the source code returned from the page selected
 
@@ -18,7 +18,7 @@
 	  //perform queries to find information
 	  $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
 	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //gets the event description
-	}
+	  $link = $page;    //link to event
 	
 	//convert scraped data from DOMNodeList to string
 	if($event_title->length > 0)
@@ -30,7 +30,7 @@
 	    $event_title = substr($event_title, 5); 						      //remove the tag at the beginning of the string
 	    echo $event_title;
 	    
-	    echo '<br/>';
+	    echo '<br/></br>';
 	    
 	    //get event description. iterate through the paragraph adding each sentence to the string "full_event_desc"
 	    $full_event_desc = '';
@@ -43,8 +43,13 @@
 	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
 	    $event_desc = substr($event_desc, 3); 						     	       //remove the tag at the beginning of the string
 	    echo $full_event_desc;
+	    
+	    echo '<br/><br/>';
+	    
+	    echo "link: $link";
 	}
 	
+	/*
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
 	$password = '';
@@ -68,9 +73,9 @@
 		//Insert into the database
 		mysql_select_db($database, $connection);
 	
-		$sql = "INSERT INTO event_list (title, description)
+		$sql = "INSERT INTO event_list (title, description, link)
 		VALUES
-		('$event_title', '$full_event_desc')";
+		('$event_title', '$full_event_desc', '$link')";
 
 		mysql_query($sql);
 	
@@ -79,5 +84,8 @@
 	else 
 		print "Database NOT Found ";
 	
-	mysql_close($connection);
+	mysql_close($connection);*/
+    }
+    else
+	    print "<br/>Invalid URL"
 ?>

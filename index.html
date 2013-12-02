@@ -1,27 +1,43 @@
 <html>
-
 <script type=text/javascript>
-   function answers()
-   {
-      var answer=document.getElementById("website");
-      alert(answer); 
-   }
+function ClearFields() 
+{
+     document.getElementById("farmleighID").value = "";
+     document.getElementById("phoenixID").value = "";
+	document.getElementById("heritageID").value = "";
+}
 </script>
-
 <body>
+</br></br></br></br>
    <center>
 	   
-	   <select name="newSkill" id="website">
-	       <option value="1">Phoenix Park Official</option>
-	       <option value="farmleighwebsite.php">Farmleigh Official</option>
-	   </select>
-	   
-        <form action="farmleighwebsite.php" method="post">
-	    
-            Webpage to scrape: <input type="text" name="url" size=50>
-            <input type="submit" value="Submit" onclick="answers()">
-	   
-        </form>
+	   <table border="1">
+		   <tr>
+			   <th><center>Website</center></th>
+			   <th><center>URL</center></th>
+		  </tr>
+		  <tr>
+			  <form action="farmleighwebsite.php" method="post" id="farmleigh_textbox">
+			      <td>farmleigh.ie</td>
+			      <td><input type="text" name="farmleigh_url" id="farmleighID" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+		  <tr>
+			  <form action="phoenixparkofficial.php" method="post">
+			      <td>phoenixpark.ie</td>
+			      <td><input type="text" name="phoenix_url" id="phoenixID" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+		  <tr>
+			  <form action="heritageireland.php" method="post">
+			      <td>heritageireland.ie</td>
+			      <td><input type="text" name="heritage_url" id="heritageID" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+	  </table>
+	  
+	  </br><input type="reset" value="Clear" onclick="ClearFields()">
+	  
    </center>
 </body>
 </html>
