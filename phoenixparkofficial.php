@@ -39,9 +39,9 @@
 		    $full_event_desc .= $node->textContent;
 	    }
 	    
-	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	       //convert to string
-	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
-	    $event_desc = substr($event_desc, 3); 						     	       //remove the tag at the beginning of the string
+	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	        //convert to string
+	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
+	    $event_desc = substr($event_desc, 3); 						     	            //remove the tag at the beginning of the string
 	    echo $full_event_desc;
 	    
 	    echo '<br/><br/>';
@@ -49,7 +49,7 @@
 	    echo "link: $link";
 	}
 	
-	/*
+	
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
 	$password = '';
@@ -84,7 +84,7 @@
 	else 
 		print "Database NOT Found ";
 	
-	mysql_close($connection);*/
+	mysql_close($connection);
     }
     else
 	    print "<br/>Invalid URL"

@@ -1,23 +1,28 @@
 <?php
-	$user_name = 'root';
-	$password = '';
-	$database = 'park_events';
-	$server = '127.0.0.1';
-
-	//This opens up a connection to the database and fetches information for the android app. 
-	//The app connects to this script.
-	
-	$connection = mysql_connect($server, $user_name, $password);
-	mysql_select_db($database, $connection);
+	$host="localhost";
+	$username="root";
+	$password="";
+	$db_name="park_events";
  
-	$sql = mysql_query("select * from event_list where id = 37");
+ 	//create connection to the database
+	$con = mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
+	mysql_select_db("$db_name")or die("cannot select DB");
 	
-	while($row = mysql_fetch_assoc($sql))
+	//run an sql query to return data from the database
+	$sql = "select title from event_list order by id"; 
+	
+	$result = mysql_query($sql);
+	$json = array();
+ 
+ 	//get each row of data from the database
+	if(mysql_num_rows($result))
 	{
-		$output[] = $row;
+    	 	while($row = mysql_fetch_assoc($result))
+    	 	{
+       	   		$json['event_list'][] = $row;
+	  	   		
+    		}
+    		echo json_encode($json); 
 	}
-	
-	print(json_encode($output));    //this will print the output in json
-	
-	mysql_close($connection);
+	mysql_close($con);
 ?>
