@@ -49,7 +49,7 @@
 	    
 	    echo "link: $link";
 	}
-	/*
+	
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
 	$password = '';
@@ -84,7 +84,7 @@
 	else 
 		print "Database NOT Found ";
 	
-	mysql_close($connection);*/
+	mysql_close($connection);
      }
 	else
 		print "<br/>Invalid URL"
