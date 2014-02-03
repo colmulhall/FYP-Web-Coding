@@ -72,9 +72,9 @@
     		//Insert into the database
     		mysql_select_db($database, $connection);
 	
-    		$sql = "INSERT INTO event_list (title, description, location)
+    		$sql = "INSERT INTO event_list (title, description, location, link)
     		VALUES
-    		('$event_title', '$full_event_desc', 'Farmleigh')";
+    		('$event_title', '$full_event_desc', 'Farmleigh', '$link')";
 
     		mysql_query($sql);
 	

@@ -40,9 +40,9 @@
 		    $full_event_desc .= '<br/>';
 	    }
 	    
-	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	       //convert to string
-	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
-	    $event_desc = substr($event_desc, 3); 						     	       //remove the tag at the beginning of the string
+	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	        //convert to string
+	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
+	    $event_desc = substr($event_desc, 3); 						     	            //remove the tag at the beginning of the string
 	    echo $full_event_desc;
 	    
 	    echo '<br/><br/>';
