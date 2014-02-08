@@ -1,4 +1,5 @@
 <?php
+	
 	$host="localhost";
 	$username="root";
 	$password="";
@@ -7,9 +8,10 @@
  	//create connection to the database
 	$con = mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
 	mysql_select_db("$db_name")or die("cannot select DB");
+
 	
 	//return all event titles from the database ordered by date
-	$sql = "select id, title, date from event_list order by date asc"; 
+	$sql = "select id, title, date from event_list order by date"; 
 	
 	$result = mysql_query($sql);
 	$json = array();

@@ -1,4 +1,10 @@
-<?php
+<?php 
+
+	if($_POST)
+	{
+    	$ID = urldecode($_POST['id']);
+	}
+
 	$host="localhost";
 	$username="root";
 	$password="";
@@ -8,13 +14,22 @@
 	$con = mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
 	mysql_select_db("$db_name")or die("cannot select DB");
 
-	//get string from android
-	if (isset($_POST['action']))
-		echo "";
-	if($title == "")
-		echo "NOTHING";
-	else
-		echo $title;
-
+	
+	//return all event titles from the database ordered by date
+	$sql = "select id, title, date from event_list where id = $ID"; 
+	
+	$result = mysql_query($sql);
+	$json = array();
+ 
+ 	//get each row of data from the database
+	if(mysql_num_rows($result))
+	{
+    	 	while($row = mysql_fetch_assoc($result))
+    	 	{
+       	   		$json['event_list'][] = $row;
+    		}
+    		echo json_encode($json); 
+	}
 	mysql_close($con);
+	
 ?>
