@@ -86,6 +86,9 @@
     	mysql_close($connection); 
 	}
 	else
-		print "<br/>Invalid URL"
+		print "<br/>Invalid URL";
+
+    echo "</br>Length of description: ";
+    echo strlen($full_event_desc);
 	
 ?>

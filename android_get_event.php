@@ -1,5 +1,6 @@
 <?php 
 
+	//get the ID which was posted from the app
 	if($_POST)
 	{
     	$ID = urldecode($_POST['id']);
@@ -13,10 +14,9 @@
  	//create connection to the database
 	$con = mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
 	mysql_select_db("$db_name")or die("cannot select DB");
-
 	
-	//return all event titles from the database ordered by date
-	$sql = "select id, title, date from event_list where id = $ID"; 
+	//returns the event from the database based on the POSTed ID
+	$sql = "select title from event_list where id = $ID"; 
 	
 	$result = mysql_query($sql);
 	$json = array();
