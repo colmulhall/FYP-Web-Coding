@@ -5,7 +5,8 @@
 	{
     	$ID = urldecode($_POST['id']);
 	}
-
+	$ID = 3;
+	 
 	$host="localhost";
 	$username="root";
 	$password="";
@@ -16,7 +17,7 @@
 	mysql_select_db("$db_name")or die("cannot select DB");
 	
 	//returns the event from the database based on the POSTed ID
-	$sql = "select title from event_list where id = $ID"; 
+	$sql = "select title, description from event_list where id = $ID"; 
 	
 	$result = mysql_query($sql);
 	$json = array();
