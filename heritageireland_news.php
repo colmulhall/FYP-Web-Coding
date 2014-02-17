@@ -1,19 +1,7 @@
 <?php
-	//function to get rid of line breaks. JSON cannot read these.
-	function parse($text) 
-	{
-	    // Damn pesky carriage returns...
-	    $text = str_replace("\r\n", "\n", $text);
-	    $text = str_replace("\r", "\n", $text);
+	//-------------------------WEB SCRAPE---------------------------
+	$page = $_POST["heritage_url"];    //get url of the page to scrape from index.html
 
-	    // JSON requires new line characters be escaped
-	    $text = str_replace("\n", "\\n", $text);
-	    return $text;
-	}
-
-     //-------------------------WEB SCRAPE---------------------------
-	$page = $_POST["phoenix_url"];   //get url of the page to scrape from index.html
-	
 	$html = file_get_contents($page); //get the source code returned from the page selected
 
 	$park_doc = new DOMDocument();  //declare a new DOM object
@@ -22,15 +10,15 @@
 
 	if(!empty($html))    //if any html is actually returned
 	{
-	  $park_doc->loadHTML($html);
-	  libxml_clear_errors(); //remove html errors
-	  
-	  $xpath = new DOMXPath($park_doc);  //DOMXPath allows queries with the DOM document. 
-	  
-	  //perform queries to find information
-	  $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
-	  $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p | //div[@id="contentcolumn1"]/ul | //h5');  //gets the event description
-	  $link = $page;    //link to event
+		$park_doc->loadHTML($html);
+ 	     libxml_clear_errors(); //remove html errors
+  
+ 	     $xpath = new DOMXPath($park_doc);  //DOMXPath allows queries with the DOM document. 
+  
+ 	 	 //perform queries to find information
+ 	 	 $event_title = $xpath->query('//h1[not(@class)]');  //gets the event title, ignores any other h1 headings on the page
+ 		 $event_desc = $xpath->query('//div[@id!="copyrighttext"]/p');  //gets the event description
+		 $link = $page;   //link to event
 	
 	//convert scraped data from DOMNodeList to string
 	if($event_title->length > 0)
@@ -42,28 +30,25 @@
 	    $event_title = substr($event_title, 5); 						      //remove the tag at the beginning of the string
 	    echo $event_title;
 	    
-	    echo '<br/></br>';
+	    echo '<br/><br/>';
 	    
 	    //get event description. iterate through the paragraph adding each sentence to the string "full_event_desc"
 	    $full_event_desc = '';
-	    foreach($event_desc as $node) 
+	    foreach($event_desc as $node)
 	    {
 		    $full_event_desc .= $node->textContent;
+		    $full_event_desc .= '<br/>';
 	    }
 	    
 	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	        //convert to string
 	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
 	    $event_desc = substr($event_desc, 3); 						     	            //remove the tag at the beginning of the string
-
-	    //call function to get rid of line breaks in the description
-		$full_event_desc = parse($full_event_desc);
 	    echo $full_event_desc;
 	    
 	    echo '<br/><br/>';
 	    
 	    echo "link: $link";
 	}
-	
 	
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
 	$user_name = 'root';
@@ -88,7 +73,7 @@
 		//Insert into the database
 		mysql_select_db($database, $connection);
 	
-		$sql = "INSERT INTO event_list (title, description, link)
+		$sql = "INSERT INTO news_updates (title, description, link)
 		VALUES
 		('$event_title', '$full_event_desc', '$link')";
 
@@ -100,10 +85,7 @@
 		print "Database NOT Found ";
 	
 	mysql_close($connection);
-    }
-    else
-	    print "<br/>Invalid URL";
-
-	echo "</br>Length of description: ";
-	echo strlen($full_event_desc);
+     }
+	else
+		print "<br/>Invalid URL"
 ?>

@@ -1,4 +1,16 @@
 <?php
+
+    //function to get rid of line breaks. JSON cannot read these.
+    function parse($text) 
+    {
+        // Damn pesky carriage returns...
+        $text = str_replace("\r\n", "\n", $text);
+        $text = str_replace("\r", "\n", $text);
+
+        // JSON requires new line characters be escaped
+        $text = str_replace("\n", "\\n", $text);
+        return $text;
+    }
      //-------------------------WEB SCRAPE---------------------------
 	$page = $_POST["farmleigh_url"];   //get url of the page to scrape from index.html
 	
@@ -27,7 +39,7 @@
     	    $node = $event_title->item(0);
     	    $event_title = "{$node->nodeName} - {$node->nodeValue}";                //convert to string
     	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);      //ignore non UTF-8 characters
-    	    $event_title = substr($event_title, 5); 						      //remove the tag at the beginning of the string
+    	    $event_title = substr($event_title, 5); 						        //remove the tag at the beginning of the string
     	    echo $event_title;
 	    
     	    echo '<br/></br>';
@@ -42,11 +54,15 @@
     	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	       //convert to string
     	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
     	    $event_desc = substr($event_desc, 3); 						     	       //remove the tag at the beginning of the string
+
+            //call function to get rid of line breaks in the description
+            //$full_event_desc = parse($full_event_desc);
+            $full_event_desc = preg_replace(' ', '_', $full_event_desc);
     	    echo $full_event_desc;
 	    
-	    echo '<br/><br/>';
+	       echo '<br/><br/>';
 	    
-	    echo "link: $link";
+	       echo "link: $link";
     	}
 	
     	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------

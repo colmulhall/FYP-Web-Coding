@@ -5,8 +5,7 @@
 	{
     	$ID = urldecode($_POST['id']);
 	}
-	$ID = 3;
-	 
+
 	$host="localhost";
 	$username="root";
 	$password="";

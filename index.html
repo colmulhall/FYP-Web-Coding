@@ -1,41 +1,78 @@
 <html>
+
 <script type=text/javascript>
 function ClearFields() 
 {
-     document.getElementById("farmleighID").value = "";
-     document.getElementById("phoenixID").value = "";
-	document.getElementById("heritageID").value = "";
+     document.getElementById("farmleighID_ev").value = "";
+     document.getElementById("phoenixID_ev").value = "";
+	 document.getElementById("heritageID_ev").value = "";
+	 document.getElementById("farmleighID_news").value = "";
+     document.getElementById("phoenixID_news").value = "";
+	 document.getElementById("heritageID_news").value = "";
 }
 </script>
+
 <body>
 </br></br></br></br>
    <center>
 	   
+	   <h2>Events</h2>
+	   <!-- Insert into events table -->
 	   <table border="1">
 		   <tr>
 			   <th><center>Website</center></th>
 			   <th><center>URL</center></th>
 		  </tr>
 		  <tr>
-			  <form action="farmleighwebsite.php" method="post" id="farmleigh_textbox">
+			  <form action="farmleigh_event.php" method="post" id="farmleigh_textbox">
 			      <td>farmleigh.ie</td>
-			      <td><input type="text" name="farmleigh_url" id="farmleighID" size=50> <input type="submit" value="Scrape"></td>
+			      <td><input type="text" name="farmleigh_url" id="farmleighID_ev" size=50> <input type="submit" value="Scrape"></td>
 			  </form>
 		  </tr>
 		  <tr>
-			  <form action="phoenixparkofficial.php" method="post">
+			  <form action="phoenixparkofficial_event.php" method="post">
 			      <td>phoenixpark.ie</td>
-			      <td><input type="text" name="phoenix_url" id="phoenixID" size=50> <input type="submit" value="Scrape"></td>
+			      <td><input type="text" name="phoenix_url" id="phoenixID_ev" size=50> <input type="submit" value="Scrape"></td>
 			  </form>
 		  </tr>
 		  <tr>
-			  <form action="heritageireland.php" method="post">
+			  <form action="heritageireland_event.php" method="post">
 			      <td>heritageireland.ie</td>
-			      <td><input type="text" name="heritage_url" id="heritageID" size=50> <input type="submit" value="Scrape"></td>
+			      <td><input type="text" name="heritage_url" id="heritageID_ev" size=50> <input type="submit" value="Scrape"></td>
 			  </form>
 		  </tr>
 	  </table>
-	  
+
+
+	</br></br></br>
+
+	  <h2>News Updates</h2>
+	  <!-- Insert into news updates table -->
+	  <table border="1">
+		   <tr>
+			   <th><center>Website</center></th>
+			   <th><center>URL</center></th>
+		  </tr>
+		  <tr>
+			  <form action="farmleigh_news.php" method="post" id="farmleigh_textbox">
+			      <td>farmleigh.ie</td>
+			      <td><input type="text" name="farmleigh_url" id="farmleighID_news" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+		  <tr>
+			  <form action="phoenixparkofficial_news.php" method="post">
+			      <td>phoenixpark.ie</td>
+			      <td><input type="text" name="phoenix_url" id="phoenixID_news" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+		  <tr>
+			  <form action="heritageireland_news.php" method="post">
+			      <td>heritageireland.ie</td>
+			      <td><input type="text" name="heritage_url" id="heritageID_news" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+	  </table>
+
 	  </br><input type="reset" value="Clear" onclick="ClearFields()">
 	  
    </center>
