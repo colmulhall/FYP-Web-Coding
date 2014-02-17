@@ -57,7 +57,6 @@
 
             //call function to get rid of line breaks in the description
             //$full_event_desc = parse($full_event_desc);
-            $full_event_desc = preg_replace(' ', '_', $full_event_desc);
     	    echo $full_event_desc;
 	    
 	       echo '<br/><br/>';
