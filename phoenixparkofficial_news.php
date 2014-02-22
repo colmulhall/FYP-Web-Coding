@@ -1,18 +1,6 @@
 <?php
 
-	//function to get rid of line breaks. JSON cannot read these.
-	function parse($text) 
-	{
-	    // Damn pesky carriage returns...
-	    $text = str_replace("\r\n", "\n", $text);
-	    $text = str_replace("\r", "\n", $text);
-
-	    // JSON requires new line characters be escaped
-	    $text = str_replace("\n", "\\n", $text);
-	    return $text;
-	}
-
-     //-------------------------WEB SCRAPE---------------------------
+	//-------------------------WEB SCRAPE---------------------------
 	$page = $_POST["phoenix_url"];   //get url of the page to scrape from index.html
 
 	$html = file_get_contents($page); //get the source code returned from the page selected
@@ -49,24 +37,20 @@
 		    $full_event_desc = '';
 		    foreach($event_desc as $node) 
 		    {
-			    $full_event_desc .= $node->textContent;
+			    $full_event_desc .= $node->textContent .= " ";
+
+			    //replace unreadable characters from the description (e.g. &nbsp;)
 			    $full_event_desc = utf8_decode($full_event_desc);
-			    $r = utf8_decode('Â');
-			    $full_event_desc = str_replace($r, '', $full_event_desc);
+			    $temp = utf8_decode('Â');
+			    $full_event_desc = str_replace($temp, '', $full_event_desc);
 			    $full_event_desc = str_replace("?", " ", $full_event_desc);
-			    echo '</br>';
-			    echo $full_event_desc;
 		    }
 
-		    echo '</br>';
-		    echo '</br>';
 		    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	        //convert to string
 		    
 		    $event_desc = html_entity_decode($event_desc);
 		    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
-		    //$event_desc = substr($event_desc, 3); 						     	            //remove the tag at the beginning of the string
 
-		    //call function to get rid of line breaks in the description
 		    echo $full_event_desc;
 
 		    echo '<br/><br/>';

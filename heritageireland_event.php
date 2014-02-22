@@ -34,15 +34,19 @@
 	    
 	    //get event description. iterate through the paragraph adding each sentence to the string "full_event_desc"
 	    $full_event_desc = '';
-	    foreach($event_desc as $node)
-	    {
-		    $full_event_desc .= $node->textContent;
-		    $full_event_desc .= '<br/>';
-	    }
+            foreach($event_desc as $node) 
+            {
+                $full_event_desc .= $node->textContent .= " ";
+
+                //replace unreadable characters from the description (e.g. &nbsp;)
+                $full_event_desc = utf8_decode($full_event_desc);
+                $temp = utf8_decode('Â');
+                $full_event_desc = str_replace($temp, '', $full_event_desc);
+                $full_event_desc = str_replace("?", " ", $full_event_desc);
+            }
 	    
-	    $event_desc = "{$node->nodeName} - {$node->nodeValue}";   			 	        //convert to string
 	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
-	    $event_desc = substr($event_desc, 3); 						     	            //remove the tag at the beginning of the string
+	    
 	    echo $full_event_desc;
 	    
 	    echo '<br/><br/>';
