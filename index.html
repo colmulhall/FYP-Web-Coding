@@ -9,6 +9,7 @@ function ClearFields()
 	 document.getElementById("farmleighID_news").value = "";
      document.getElementById("phoenixID_news").value = "";
 	 document.getElementById("heritageID_news").value = "";
+	 document.getElementById("bloomID_news").value = "";
 }
 </script>
 
@@ -69,6 +70,12 @@ function ClearFields()
 			  <form action="heritageireland_news.php" method="post">
 			      <td>heritageireland.ie</td>
 			      <td><input type="text" name="heritage_url" id="heritageID_news" size=50> <input type="submit" value="Scrape"></td>
+			  </form>
+		  </tr>
+		  <tr>
+			  <form action="bloom_event.php" method="post">
+			      <td>bloominthepark.com</td>
+			      <td><input type="text" name="bloom_url" id="bloomID_news" size=50> <input type="submit" value="Scrape"></td>
 			  </form>
 		  </tr>
 	  </table>

@@ -26,9 +26,13 @@
     	{
     		//get event title
     	    $node = $event_title->item(0);
-    	    $event_title = "{$node->nodeName} - {$node->nodeValue}";                //convert to string
-    	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);      //ignore non UTF-8 characters
-    	    $event_title = substr($event_title, 5); 						        //remove the tag at the beginning of the string
+    	    $event_title = "{$node->nodeName} - {$node->nodeValue}";  //convert to string
+            $event_title = utf8_decode($event_title);
+            $temp = utf8_decode('Ã¡');
+            $event_title = str_replace($temp, '', $event_title);
+            
+            
+    	    $event_title = substr($event_title, 5);  //remove the tag at the beginning of the string
     	    echo $event_title;
 	    
     	    echo '<br/></br>';
@@ -47,7 +51,6 @@
             }
 	    
     	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);         //ignore non UTF-8 characters
-            
     	    echo $full_event_desc;
 	    
 	       echo '<br/><br/>';
