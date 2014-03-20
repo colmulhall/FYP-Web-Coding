@@ -15,8 +15,8 @@
 	$con = mysql_connect("$host", "$username", "$password")or die("cannot connect"); 
 	mysql_select_db("$database")or die("cannot select DB");
 	
-	//returns the news item from the database based on the POSTed ID
-	$sql = "select title, description, location, link from news_updates where id = $ID"; 
+	//returns the event from the database based on the POSTed ID
+	$sql = "select title, description, date, location, category from user_events where id = $ID"; 
 	
 	$result = mysql_query($sql);
 	$json = array();
@@ -26,7 +26,7 @@
 	{
     	while($row = mysql_fetch_assoc($result))
     	{
-       	 	$json['news_updates'][] = $row;
+       	   	$json['user_events'][] = $row;
     	}
     	echo json_encode($json); 
 	}

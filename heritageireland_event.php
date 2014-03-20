@@ -28,6 +28,7 @@
 	    $event_title = "{$node->nodeName} - {$node->nodeValue}";                //convert to string
 	    $event_title = iconv("UTF-8", "ISO-8859-1//IGNORE", $event_title);      //ignore non UTF-8 characters
 	    $event_title = substr($event_title, 5); 						      //remove the tag at the beginning of the string
+            $event_title = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $event_title);
 	    echo $event_title;
 	    
 	    echo '<br/><br/>';
@@ -43,6 +44,7 @@
                 $temp = utf8_decode('Â');
                 $full_event_desc = str_replace($temp, '', $full_event_desc);
                 $full_event_desc = str_replace("?", " ", $full_event_desc);
+                $full_event_desc = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $full_event_desc);
             }
 	    
 	    $full_event_desc = iconv("UTF-8", "ISO-8859-1//IGNORE", $full_event_desc);      //ignore non UTF-8 characters
@@ -55,12 +57,12 @@
 	}
 	
 	//-------------------------CONNECTION AND INSERTION INTO DATABASE---------------------------
-	$user_name = 'root';
-	$password = '';
-	$database = 'park_events';
-	$server = '127.0.0.1';
+	$user_name = 'a9517348_colm';
+	$password = 'parkdbpass7';
+	$database = 'a9517348_parkdb';
+	$host = 'mysql5.000webhost.com';
 
-	$connection = mysql_connect($server, $user_name, $password);
+	$connection = mysql_connect($host, $user_name, $password);
 
 	//Check connection-------------------------------------------------
 	if (mysqli_connect_errno())
